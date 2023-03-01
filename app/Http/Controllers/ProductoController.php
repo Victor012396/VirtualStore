@@ -6,24 +6,25 @@ use App\Models\Producto;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\View\View;
 
 class ProductoController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(): Response
+    public function index(): View
     {
-        $productos =Producto::all();//get()
-        return view('createProducto',compact('productos'));
+        $productos =Producto::get();//get()
+        return view('productos/indexProducto',compact('productos'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create(): Response
+    public function create(): Resource
     {
-        return view('createProducto');
+        return view('productos/createProducto');
     }
 
     /**
@@ -40,7 +41,17 @@ class ProductoController extends Controller
             'linkPicture'=>['required'],
 
         ]);
-        dd($request->all());
+       // dd($request->all());
+        $productos=new Producto();
+        $productos->name = $request->name;
+        $productos->year = $request->year;
+        $productos->creator = $request->creator;
+        $productos->description = $request->description;
+        $productos->price = $request->price;
+        $productos->linkPicture = $request->linkPicture;
+        $productos->save();
+        return redirect('/producto');
+
     }
 
     /**

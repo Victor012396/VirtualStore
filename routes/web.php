@@ -18,4 +18,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('/producto',ProductoController::class);
+Route::resource('/productos',ProductoController::class);
+Route::get('/productos/createProducto',function(){
+    return view('/productos/createProducto');
+});
