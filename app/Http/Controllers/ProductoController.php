@@ -75,7 +75,23 @@ class ProductoController extends Controller
      */
     public function update(Request $request, Producto $producto): RedirectResponse
     {
-        //
+        $request -> validate([
+            'name'=>"required|max:150",
+            'year'=>['required','numeric','min:2005'],
+            'creator'=>['required','max:50'],
+            'description'=>['required'],
+            'price'=>['required','numeric'],
+            'linkPicture'=>['required'],
+        ]);
+        $productos=new Producto();
+        $productos->name = $request->name;
+        $productos->year = $request->year;
+        $productos->creator = $request->creator;
+        $productos->description = $request->description;
+        $productos->price = $request->price;
+        $productos->linkPicture = $request->linkPicture;
+        $productos->save();
+        return redirect()->route('producto.show',$producto);
     }
 
     /**
