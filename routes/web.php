@@ -22,3 +22,13 @@ Route::resource('/productos',ProductoController::class);
 Route::get('/productos/createProducto',function(){
     return view('/productos/createProducto');
 });
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+});
